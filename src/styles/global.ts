@@ -38,6 +38,7 @@ export const GlobalStyle = createGlobalStyle`
   body, input, textarea, button {
     color: var(--text);
     font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
     font-weight: 400;
   }
 
@@ -58,6 +59,43 @@ export const GlobalStyle = createGlobalStyle`
   [disabled] {
     opacity: 0.6;
     cursor: not-allowed
+  }
+
+  .react-modal-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center
+  }
+
+  .react-modal-content {
+    width: 95%;
+    max-width: 576px;
+    padding: 3rem;
+    background: var(--background);
+    position: relative;
+    border-radius: 5px;
+  }
+
+  .react-modal-close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    padding: 0.25rem;
+    font-size: 0;
+    transition: filter 0.2s;
+
+    &:focus {
+      outline: 1px solid var(--red);
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 
   ::-webkit-scrollbar {

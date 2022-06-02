@@ -1,10 +1,18 @@
 import { StyledButton } from './styles'
 
-type ButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
->
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: 'blue' | 'green'
+}
 
-export const Button = ({ children }: ButtonProps) => {
-  return <StyledButton type='button'>{children}</StyledButton>
+export const Button = ({
+  children,
+  variant = 'blue',
+  type = 'button',
+  ...props
+}: ButtonProps) => {
+  return (
+    <StyledButton type={type} variant={variant} {...props}>
+      {children}
+    </StyledButton>
+  )
 }
