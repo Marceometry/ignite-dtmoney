@@ -3,13 +3,14 @@ import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
   :root {
     --background: #121214;
-    --foreground: #2e2e31;
-    --title: #363F5F;
-    --text: #969CB3;
+    --foreground: #2E2E31;
+    --title: #CAD3F3;
+    --text: #B9BCC6;
+    --text-secondary: #9E9E9F;
     --blue: #5429CC;
     --blue-light: #6933FF;
     --green: #33CC95;
-    --red: #E62E4D;
+    --red: #FF5B77;
   }
 
   * {
@@ -35,6 +36,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body, input, textarea, button {
+    color: var(--text);
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
   }
@@ -43,8 +45,14 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 600;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--title);
+  }
+
   button {
     cursor: pointer;
+    border: none;
+    background: none;
   }
 
   [disabled] {
