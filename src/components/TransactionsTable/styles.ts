@@ -39,4 +39,10 @@ export const Container = styled.div`
       }
     }
   }
+
+  .empty-table {
+    display: grid;
+    place-items: center;
+    width: 100%;
+  }
 `

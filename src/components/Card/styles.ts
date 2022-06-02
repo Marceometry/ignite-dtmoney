@@ -1,10 +1,21 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+type ContainerProps = {
+  isTotal: boolean
+  isNegative: boolean
+}
+
+export const Container = styled.div<ContainerProps>`
   padding: 1.5rem 2rem;
   border-radius: 5px;
-  background: var(--foreground);
-  color: var(--title);
+  transition: background-color, 0.2s;
+  color: ${({ isTotal }) => (!isTotal ? 'var(--title)' : 'var(--foreground)')};
+  background-color: ${({ isTotal, isNegative }) =>
+    !isTotal
+      ? 'var(--foreground)'
+      : isNegative
+      ? 'var(--red)'
+      : 'var(--green)'};
 
   header {
     display: flex;

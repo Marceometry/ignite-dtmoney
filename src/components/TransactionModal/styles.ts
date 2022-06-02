@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { darken, transparentize } from 'polished'
+import { TransactionType } from '../../types'
 
 export const Form = styled.form`
   h2 {
@@ -44,7 +45,7 @@ export const TransactionTypeContainer = styled.div`
 
 type TransactionTypeButtonProps = {
   active: boolean
-  transactionType: 'income' | 'outcome'
+  transactionType: TransactionType
 }
 
 const buttonColors = {

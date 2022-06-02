@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Dashboard, Header, TransactionModal } from './components'
-import { GlobalStyle } from './styles/global'
+import { TransactionsContextProvider } from './contexts'
+import { GlobalStyle } from './styles'
 
 export function App() {
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false)
@@ -10,7 +11,7 @@ export function App() {
   const handleCloseTransactionModal = () => setIsTransactionModalOpen(false)
 
   return (
-    <>
+    <TransactionsContextProvider>
       <Header onOpenTransactionModal={handleOpenTransactionModal} />
       <Dashboard />
       <TransactionModal
@@ -18,6 +19,6 @@ export function App() {
         onClose={handleCloseTransactionModal}
       />
       <GlobalStyle />
-    </>
+    </TransactionsContextProvider>
   )
 }

@@ -23,13 +23,17 @@ export const Card = ({ data }: CardProps) => {
   const image = images[type]
 
   return (
-    <Container>
+    <Container isTotal={type === 'total'} isNegative={value < 0}>
       <header>
         <p>{title}</p>
         <img src={image} alt={title} />
       </header>
       <strong>
-        {type === 'outcome' && '-'} R${value.toLocaleString()}
+        {(type === 'outcome' || (type === 'total' && value < 0)) && '- '}
+        {new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(Math.abs(value))}
       </strong>
     </Container>
   )

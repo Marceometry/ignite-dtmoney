@@ -3,7 +3,8 @@ import Modal from 'react-modal'
 import closeIcon from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
-import { Button } from '../Button'
+import { useTransactions } from '../../contexts'
+import { Button } from '..'
 import { Form, TransactionTypeButton, TransactionTypeContainer } from './styles'
 
 type ModalProps = {
@@ -13,13 +14,45 @@ type ModalProps = {
 
 Modal.setAppElement('#root')
 
+const emptyForm = {
+  title: '',
+  category: '',
+  amount: '',
+}
+
 export const TransactionModal = ({ isOpen, onClose }: ModalProps) => {
+  const { createTransaction } = useTransactions()
   const [transactionType, setTransactionType] = useState('income')
+  const [newTransaction, setNewTransaction] = useState(emptyForm)
+
+  const handleCloseModal = () => {
+    onClose()
+    setTransactionType('income')
+    setNewTransaction(emptyForm)
+  }
+
+  const handleInputChange = (value: string | number, field: string) => {
+    setNewTransaction((oldState) => ({
+      ...oldState,
+      [field]: value,
+    }))
+  }
+
+  const handleCreateTransaction = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const data = {
+      ...newTransaction,
+      amount: Number(newTransaction.amount),
+      type: transactionType,
+    }
+    await createTransaction(data)
+    handleCloseModal()
+  }
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={handleCloseModal}
       overlayClassName='react-modal-overlay'
       className='react-modal-content'
     >
@@ -27,11 +60,21 @@ export const TransactionModal = ({ isOpen, onClose }: ModalProps) => {
         <img src={closeIcon} alt='Fechar modal' />
       </button>
 
-      <Form>
+      <Form onSubmit={handleCreateTransaction}>
         <h2>Cadastrar transação</h2>
 
-        <input placeholder='Título' />
-        <input placeholder='Valor' type='number' />
+        <input
+          placeholder='Título'
+          value={newTransaction.title}
+          onChange={(e) => handleInputChange(e.target.value, 'title')}
+        />
+        <input
+          placeholder='Valor'
+          type='number'
+          min={0}
+          value={newTransaction.amount}
+          onChange={(e) => handleInputChange(e.target.value, 'amount')}
+        />
 
         <TransactionTypeContainer>
           <TransactionTypeButton
@@ -55,7 +98,11 @@ export const TransactionModal = ({ isOpen, onClose }: ModalProps) => {
           </TransactionTypeButton>
         </TransactionTypeContainer>
 
-        <input placeholder='Categoria' />
+        <input
+          placeholder='Categoria'
+          value={newTransaction.category}
+          onChange={(e) => handleInputChange(e.target.value, 'category')}
+        />
 
         <Button type='submit' variant='green'>
           Cadastrar
